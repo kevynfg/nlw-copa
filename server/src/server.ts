@@ -10,14 +10,15 @@ import jwt from '@fastify/jwt';
 async function bootstrap() {
     const fastify = Fastify({
         logger: true,
+        pluginTimeout: 20000
     })
 
     await fastify.register(cors, {
         origin: true
     })
-    console.log(process.env.JWT_SECRET);
+
     await fastify.register(jwt, {
-        secret: process.env.JWT_SECRET ?? 'dogs'
+        secret: process.env.JWT_SECRET ?? 'dogs',
     });
 
     await fastify.register(poolRoutes);
